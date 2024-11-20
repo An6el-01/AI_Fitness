@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'signup_screen.dart';
 import 'home_screen.dart';
 import '../services/api_service.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,21 +16,34 @@ class LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final ApiService _apiService = ApiService();
+  final _storage = const FlutterSecureStorage();
+
+  Future<String> getAuthenticatedUserId() async {
+    final token = await _storage.read(key: 'auth_token');
+    if (token == null) return '';
+
+    try {
+      final jwt = JWT.decode(token);
+      return jwt.payload['userId'] as String;
+    } catch (error) {
+      debugPrint('Error decoding token[login_screen.dart]: $error');
+      return '';
+    }
+  }
 
   void _login() async {
     try {
-      final response = await _apiService.loginUser(
+      await _apiService.loginUser(
         _emailController.text.trim(),
         _passwordController.text.trim(),
       );
 
-      if (response['token'] != null) {
-        if (!mounted) return;
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
-        );
-      }
+      if (!mounted) return;
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
+      );
     } catch (error) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
