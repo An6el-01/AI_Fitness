@@ -26,7 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       return userData;
     } catch (error) {
       debugPrint('Error fetching user data: $error');
-      throw error;
+      rethrow;
     }
   }
 
