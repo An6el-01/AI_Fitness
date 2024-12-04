@@ -1,4 +1,4 @@
-const { generateWorkoutPlan } = require('../../utils/workoutPlanHelper');
+const generateWorkoutPlan = require('../../utils/workoutPlanHelper');
 const Exercise = require('../../models/Exercise');
 const { connect, disconnect, clearDatabase } = require('../setup');
 
@@ -9,8 +9,8 @@ afterAll(async () =>  await disconnect());
 describe('Workout Plan Helper', () => {
     beforeEach(async () => {
         await Exercise.create([
-            {name: 'Push Up', category: 'strength', fitnessLevel: 'Beginner', targetMuscle: 'Chest', duration: 10 },
-            {name: 'Running', category: 'cardio', fitnessLevel: 'Intermediate', targetMuscle: 'Legs', duration: 20 }
+            {name: 'Push Up', category: 'Strength', fitnessLevel: 'Beginner', targetMuscle: 'Chest', duration: 10 },
+            {name: 'Running', category: 'Cardio', fitnessLevel: 'Intermediate', targetMuscle: 'Legs', duration: 20 }
         ]);
     });
 

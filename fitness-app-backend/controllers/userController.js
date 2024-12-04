@@ -2,62 +2,79 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+
 exports.register = async (req, res) => {
-    try{
+    try {
         const { name, email, password } = req.body;
+
+        // Check if user exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: 'Email is already in use.' });
+        }
+
+        // Hash password and save user
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({ name, email, password: hashedPassword });
         await newUser.save();
-        res.status(201).json({ message: "User registered successfully!" });
-    }catch(error){
-        rest.status(500).json({ message: 'Error registering user :(' });
+
+        // Generate token
+        const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, {
+            expiresIn: '1h', // Optional: set token expiration
+        });
+
+        res.status(201).json({ message: 'User registered successfully!', token });
+    } catch (error) {
+        console.error('Error during registration:', error);
+        res.status(500).json({ message: 'Failed to register user' });
     }
 };
-
 
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        // Check if email and password are provided
         if (!email || !password) {
-            return res.status(400).json({ error: "Email and password are required." });
+            return res.status(400).json({ error: 'Email and password are required.' });
         }
 
-        // Find user by email
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(400).json({ error: "Invalid credentials. Please try again." });
+            return res.status(400).json({ error: 'Invalid credentials. Please try again.' });
         }
 
-        // Compare password
         const isPasswordCorrect = await bcrypt.compare(password, user.password);
         if (!isPasswordCorrect) {
-            return res.status(400).json({ error: "Invalid credentials. Please try again." });
+            return res.status(400).json({ error: 'Invalid credentials. Please try again.' });
         }
 
-        // Generate JWT token
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+        const token = jwt.sign({ userId: user._id.toString() }, process.env.JWT_SECRET);
+
         res.json({ token });
     } catch (error) {
-        console.error("Error in login function[userController.js]:", error); // Log detailed error
+        console.error('Error in login function[userController.js]:', error);
         res.status(500).json({ error: 'An internal error occurred. Please try again later.' });
     }
 };
 
+
 exports.getUserProfile = async (req, res) => {
-    try{
-        const userId = req.params.id;
+    try {
+        const userId = req.params.id && req.params.id !== 'me' ? req.params.id : req.user._id;
+
         const user = await User.findById(userId).select('-password');
-        if(!user){
-            return res.status(404).json({ message: "User not found[userController.js]" })
+        if (!user) {
+            console.error('User not found in DB');
+            return res.status(404).json({ message: 'User not found[userController.js]' });
         }
+
         res.json(user);
-    }catch(error){
-        console.error("Error fetching user profile[userController.js]:", error);
-        res.status(500).json({ error: "Failed to fetch user profile "});
+    } catch (error) {
+        console.error('Error fetching user profile[userController.js]:', error);
+        res.status(500).json({ error: 'Failed to fetch user profile' });
     }
 };
+
 
 exports.updateUserProfile = async (req, res) => {
     try{

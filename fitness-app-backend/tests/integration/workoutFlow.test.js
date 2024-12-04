@@ -9,12 +9,12 @@ afterAll(async () => disconnect());
  describe('Work Flow', () => {
     it('should create a workout plan for a registered user', async () => {
         const user = await request(app)
-        .post('api/users/register')
+        .post('/api/users/register')
         .send({ name: 'Jane Doe', email: 'jane@example.com', password: 'password' });
 
         const token = user.body.token;
         const res = await request(app)
-        .post('api/plans')
+        .post('/api/plans')
         .set('Authorization', `Bearer ${token}`)
         .send({
             weight: 70,

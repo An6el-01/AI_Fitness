@@ -1,4 +1,4 @@
-const { validateWorkoutPlanInput } = require('../../middleware/validateWorkoutPlanInput');
+const validateWorkoutPlanInput = require('../../middleware/validateWorkoutPlanInput');
 
 describe('Validate Workout Plan Input Middleware', () => {
     it('should call next() if input is valid', () => {
@@ -32,6 +32,6 @@ describe('Validate Workout Plan Input Middleware', () => {
         validateWorkoutPlanInput(req, res, next);
 
         expect(res.status).toHaveBeenCalledWidth(400);
-        expect(res.json).toHaveBeenCalledWidth({ error: 'Invalid input. Please provide all required fields.' });
+        expect(res.json).toHaveBeenCalledWidth({ message: 'Invalid input. Please provide all required fields.' });
     });
 });

@@ -93,4 +93,4 @@ function determineFitnessLevel(
     }
 }
 
-module.exports = { determinedFitnessLevel };
+module.exports = { determineFitnessLevel };

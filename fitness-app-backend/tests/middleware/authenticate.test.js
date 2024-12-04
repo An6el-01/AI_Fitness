@@ -1,4 +1,4 @@
-const { authenticate } = require('../../middleware/authenticate');
+const authenticate = require('../../middleware/authenticate');
 const jwt = require('jsonwebtoken');
 
 describe('Authenticate Middleware', () => {
@@ -26,11 +26,11 @@ describe('Authenticate Middleware', () => {
             json: jest.fn(),
         };
         const next = jest.fn();
-
+    
         authenticate(req, res, next);
-
+    
         expect(res.status).toHaveBeenCalledWith(401);
-        expect(res.json).toHaveBeenCalledWidth({ error: 'Access denied. No token provided.'});
+        expect(res.json).toHaveBeenCalledWith({ message: 'Authentication token is missing' });
     });
 
     if('should return 400 if token is invalid', () => {
@@ -40,8 +40,8 @@ describe('Authenticate Middleware', () => {
             },
         };
         const res = {
-            status: jest.fn().mockReturnThis(),
-            json: jest.fn(),
+            status: jest.fn(() => res),
+            json: jest.fn(() => res),
         };
         const next = jest.fn();
 

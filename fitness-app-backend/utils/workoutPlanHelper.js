@@ -6,13 +6,13 @@ async function generateWorkoutPlan(goal, fitnessLevel, sport = null){
     const exercises = await Exercise.find({ fitnessLevel }).lean();
 
     if(exercises.length === 0){
-        throw new error("No exercises found for the given fitness level.");
+        throw new Error("No exercises found for the given fitness level.");
     }
 
     //Filter exercises based on the user's goal
     const filteredExercises = exercises.filter((exercise) => {
         if (goal === 'Lose Weight') return exercise.category === 'Cardio';
-        if (goals === 'Gain Weight') return exercise.category === 'Strength';
+        if (goal === 'Gain Weight') return exercise.category === 'Strength';
         if (goal === 'Atheltic Gain') {
             if (sport) {
                 return exercise.sport === sport;

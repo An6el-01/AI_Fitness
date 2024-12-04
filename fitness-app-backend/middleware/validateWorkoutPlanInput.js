@@ -3,7 +3,7 @@ const validateWorkoutPlanInput = (req, res, next) => {
 
     // Validate required fields
     if (!weight || !height || !age || !sex || !activityFrequency || !activityIntensity || !experience || !goal) {
-        return res.status(400).json({ message: 'Missing required fields.' });
+        return res.status(400).json({ message: 'Invalid input, all fields are required.' });
     }
 
     // Validate positive numerical values

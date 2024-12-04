@@ -1,17 +1,17 @@
 const Exercise = require('../../models/Exercise');
 const { connect, disconnect, clearDatabase } = require('../setup');
 
-beforeAll(async() => clearDatabase());
-afterEach(async() => connect());
+beforeAll(async() => connect());
+afterEach(async() => clearDatabase());
 afterAll(async() => disconnect());
 
 describe('Exercise Model', () => {
     it('should create an exercise successfully', async () => {
         const exercise = await Exercise.create({
             name: 'Push Up',
-            category: 'strength',
+            category: 'Strength',
             fitnessLevel: 'Beginner',
-            targtMuscle: 'Chest',
+            targetMuscle: 'Chest',
             duration: 10,
         });
 

@@ -1,8 +1,8 @@
 const User = require('../../models/User');
 const { connect, disconnect, clearDatabase } = require('../setup');
 
-beforeAll(async() => clearDatabase());
-afterEach(async() => connect());
+beforeAll(async() => connect());
+afterEach(async() => clearDatabase());
 afterAll(async() => disconnect());
 
 describe('User Model', () => {
