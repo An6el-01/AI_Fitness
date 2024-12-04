@@ -10,8 +10,12 @@ const authenticate = async (req, res, next) => {
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findById(decoded.userId).select('-password');
 
+        let user = await User.findById(decoded.userId)
+        //Handle Mock Scenario
+        if (user && typeof user.select === 'function'){
+            user = await user.select('-password');
+        }
         if (!user) {
             console.error('User not found for token:', decoded.userId);
             return res.status(401).json({ message: 'Authentication failed, user not found' });

@@ -1,6 +1,6 @@
 const { determineFitnessLevel } = require('../../utils/fitnessLevelHelper');
 
-descrive('Fitness Level Helper', () => {
+describe('Fitness Level Helper', () => {
     it('should return Beginner for low fitness score', () => {
         const result = determineFitnessLevel(40, 50, 170, 1, 'light', 'beginner');
         expect(result).toBe('Beginner');
