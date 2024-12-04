@@ -2,12 +2,12 @@
 
 const WorkoutPlan = require('../models/WorkoutPlan');
 const generateWorkoutPlan = require('../utils/workoutPlanHelper');
-const determinedFitnessLevel = require('../utils/fitnessLevelHelper');
+const {determineFitnessLevel} = require('../utils/fitnessLevelHelper');
 
 exports.createWorkoutPlan = async (req, res) => {
     try {
         const { weight, height, sex, availableTime, activityFrequency, activityIntensity, experience, goal, sport } = req.body;
-        const fitnessLevel = determinedFitnessLevel(req.body.age, weight, height, activityFrequency, activityIntensity, experience);
+        const fitnessLevel = determineFitnessLevel(req.body.age, weight, height, activityFrequency, activityIntensity, experience);
         const exercises = await generateWorkoutPlan(goal, fitnessLevel, sport);
 
         // Save the workout plan to the database

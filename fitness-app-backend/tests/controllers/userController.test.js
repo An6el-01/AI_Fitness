@@ -16,10 +16,10 @@ describe('User Controller', () => {
     });
 
     it('should fail to login with invalid credentials', async() => {
-        const rest = await request(app)
-        .post('api/users/login')
+        const res = await request(app)
+        .post('/api/users/login')
         .send({ email: 'invalid@example.com', password:'password'});
         expect(res.statusCode).toBe(400);
-        expect(res.body.error).toBe('Invalid credentials, please try again.');
+        expect(res.body.error).toBe('Invalid credentials. Please try again.');
     });
 });

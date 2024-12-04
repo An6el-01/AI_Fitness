@@ -54,11 +54,12 @@ describe('Workout Controller', () => {
                 activityFrequency: 3,
                 activityIntensity: 'moderate',
                 experience: 'beginner',
-                goal: 'Build Muscle',
+                goal: 'build muscle',
             });
-
+            console.log('Response body1:', res.body);
+            console.log('Response status1:', res.statusCode);
         expect(res.statusCode).toBe(201);
-        expect(res.body.goal).toBe('Build Muscle');
+        expect(res.body.goal).toBe('build muscle');
         expect(res.body.exercises).toBeDefined();
     });
 
@@ -67,9 +68,10 @@ describe('Workout Controller', () => {
             .post('/api/plans')
             .set('Authorization', `Bearer ${token}`)
             .send({ goal: 'Lose Weight' });
-
+            console.log('Response body2:', res.body);
+            console.log('Response status2:', res.statusCode);
         expect(res.statusCode).toBe(400);
-        expect(res.body.error).toBe('Invalid input, all fields are required.');
+        expect(res.body.message).toBe('Invalid input, all fields are required.');
     });
 
     it('should retrieve a workout plan successfully', async () => {

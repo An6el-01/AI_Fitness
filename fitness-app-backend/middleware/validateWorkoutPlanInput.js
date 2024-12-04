@@ -24,7 +24,7 @@ const validateWorkoutPlanInput = (req, res, next) => {
         return res.status(400).json({ message: 'Invalid value for experience.' });
     }
 
-    if (!['lose weight', 'gain weight', 'bulk', 'cutting', 'muscle gaining', 'athletic gain'].includes(goal.toLowerCase())) {
+    if (!['lose weight', 'gain weight', 'bulk', 'cutting', 'build muscle', 'athletic gain'].includes(goal.toLowerCase())) {
         return res.status(400).json({ message: 'Invalid value for fitness goal.' });
     }
 
