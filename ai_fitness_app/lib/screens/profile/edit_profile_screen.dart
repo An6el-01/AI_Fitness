@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../services/api_service.dart';
-import '../components/custom_text_field.dart';
+import '../../services/api_service.dart';
+import '../../components/custom_text_field.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final Map<String, dynamic> userData;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../services/api_service.dart';
-import '../components/profile_card.dart';
-import './edit_profile_screen.dart';
-import 'home_screen.dart';
-import 'login_screen.dart';
+import '../../services/api_service.dart';
+import '../../components/profile_card.dart';
+import 'edit_profile_screen.dart';
+import '../home_screen.dart';
+import '../onboarding/login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});

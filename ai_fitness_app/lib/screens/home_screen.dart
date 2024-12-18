@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'profile_screen.dart'; // Import the ProfileScreen
+import 'profile/profile_screen.dart'; // Import the ProfileScreen
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

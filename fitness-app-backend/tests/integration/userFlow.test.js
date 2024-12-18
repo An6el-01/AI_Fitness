@@ -44,8 +44,6 @@ describe('User Flow', () => {
         const res = await request(app)
             .post('/api/users/register')
             .send({ name: 'Jane Doe', email: 'jane@example.com', password: 'password' });
-            console.log('Response body2:', res.body);
-            console.log('Response status2:', res.statusCode);
         expect(res.statusCode).toBe(400);
         expect(res.body.message).toBe('Email is already in use.');
     });
@@ -61,8 +59,6 @@ describe('User Flow', () => {
 
     it('should return unauthorized for protected route without token', async () => {
         const res = await request(app).get('/api/users/me');
-        console.log('Response body:', res.body);
-        console.log('Response status:', res.statusCode);
         expect(res.statusCode).toBe(401);
         expect(res.body.message).toBe('Authentication token is missing');
     });

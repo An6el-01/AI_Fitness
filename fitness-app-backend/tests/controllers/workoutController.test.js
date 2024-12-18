@@ -56,8 +56,6 @@ describe('Workout Controller', () => {
                 experience: 'beginner',
                 goal: 'build muscle',
             });
-            console.log('Response body1:', res.body);
-            console.log('Response status1:', res.statusCode);
         expect(res.statusCode).toBe(201);
         expect(res.body.goal).toBe('build muscle');
         expect(res.body.exercises).toBeDefined();
@@ -68,8 +66,6 @@ describe('Workout Controller', () => {
             .post('/api/plans')
             .set('Authorization', `Bearer ${token}`)
             .send({ goal: 'Lose Weight' });
-            console.log('Response body2:', res.body);
-            console.log('Response status2:', res.statusCode);
         expect(res.statusCode).toBe(400);
         expect(res.body.message).toBe('Invalid input, all fields are required.');
     });

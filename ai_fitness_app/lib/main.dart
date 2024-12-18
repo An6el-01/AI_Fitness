@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/login_screen.dart';
+import 'screens/onboarding/welcome_screen.dart';
 import './utils/theme.dart';
 
 void main() async {
@@ -15,7 +15,7 @@ class MainApp extends StatelessWidget {
       title: "AI Fitness App",
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      home: const LoginScreen(),
+      home: const WelcomeScreen(),
     );
   }
 }
